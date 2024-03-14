@@ -1,0 +1,62 @@
+#showcase {
+    margin-bottom: 80px;
+    display:flex;
+
+    
+
+    img {
+        margin-top: 35px;
+        width: 42%;
+
+        
+        @media(max-width: 992px) {
+        
+            display:none;
+        }
+
+    }
+
+    .container {
+
+        margin-top: 120px;
+        width: 28%;
+
+        @media(max-width: 992px) {
+        
+            text-align: center;
+            width: 100%;
+            
+        }
+
+        .content {
+            
+
+
+            p {
+
+                margin-bottom: 50px;
+            }
+
+            a {
+
+                display: inline;
+            }
+
+            h6 {
+
+                margin-top: 100px;
+            }
+        }
+
+        .brands {
+            display:flex;
+            gap: 20px;
+
+            img {
+
+            }
+        }
+
+    }
+    
+}

@@ -1,0 +1,91 @@
+﻿
+
+<section id="saved-courses">
+    <div class="container">
+
+        <div class="profile">
+            <div class="profile-picture">
+                <img src="~/images/profile/image.svg" alt="Profile picture">
+                <i class="fa-solid fa-repeat"></i>
+                <h5>John Doe</h5>
+                <p>john.doe@domain.com</p>
+            </div>
+            <div class="buttons">
+                <a class="btn-theme" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
+                <a class="btn-theme" asp-controller="Account" asp-action="Security"><i class="fa-solid fa-lock"></i>Security</a>
+                <a class="btn-theme active" asp-controller="Account" asp-action="SavedCourses"><i class="fa-solid fa-bookmark"></i>Saved Courses</a>
+                <a class="btn-theme" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
+            </div>
+        </div>
+
+        <div class="courses">
+            <div class="title-button">
+                <h2>Saved Items</h2>
+                <button class="btn-theme-s"><i class="fa-solid fa-trash"></i>Delete all</button>
+            </div>
+            <div class="articles">
+
+                <div class="article">
+                    <a href=""><i class="fa-solid fa-tag"></i></a>
+                    <img src="~/images/articles/article-6.svg" alt="">
+                    <div class="article-content">
+                        <h5>Data Science & Machine Learning with Python</h5>
+                        <p>By Esther Howard</p>
+                        <div class="price">$11.20</div>
+                        <div class="hours-likes">
+                            <div class="hours">
+                                <i class="fa-duotone fa-timer"></i>
+                                <p>160 hours</p>
+                            </div>
+                            <div class="likes">
+                                <i class="fa-light fa-thumbs-up"></i>
+                                <p>92% (3.1K)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article">
+                    <a href=""><i class="fa-solid fa-tag"></i></a>
+                    <img src="~/images/articles/article-2.svg"  alt="">
+                    <div class="article-content">
+                        <h5>HTML, CSS, JavaScript Web Developer</h5>
+                        <p>By Jenny Wilson & Marvin McKinney</p>
+                        <div class="price">$15.99</div>
+                        <div class="hours-likes">
+                            <div class="hours">
+                                <i class="fa-duotone fa-timer"></i>
+                                <p>160 hours</p>
+                            </div>
+                            <div class="likes">
+                                <i class="fa-light fa-thumbs-up"></i>
+                                <p>92% (3.1K)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article">
+                    <a href=""><i class="fa-solid fa-tag"></i></a>
+                    <img src="~/images/articles/article-3.svg"  alt="">
+                    <div class="article-content">
+                        <h5>Learn JMETER from Scratch on Live Apps-Performance Testing</h5>
+                        <p>By Jenny Wilson</p>
+                        <div class="price">$14.50</div>
+                        <div class="hours-likes">
+                            <div class="hours">
+                                <i class="fa-duotone fa-timer"></i>
+                                <p>160 hours</p>
+                            </div>
+                            <div class="likes">
+                                <i class="fa-light fa-thumbs-up"></i>
+                                <p>92% (3.1K)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

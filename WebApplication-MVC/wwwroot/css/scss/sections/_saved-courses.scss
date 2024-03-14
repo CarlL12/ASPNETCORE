@@ -1,0 +1,247 @@
+#saved-courses {
+    
+    .container {
+
+        display:flex;
+        gap: 150px;
+        padding-top: 50px;
+        padding-bottom: 100px;
+
+        @media (max-width: 1200px) {
+
+            gap: 80px;
+        }
+
+        @media (max-width: 992px) {
+
+            padding-bottom: 0px;
+            display:grid;
+        }
+        .profile {
+            max-width: 318px;
+            width: 100%;
+            border-right: 1px solid #c9cbda;
+            padding-right: 10px;
+
+            @media (max-width: 1400px) {
+
+                border-right: none;
+            }
+
+            @media (max-width: 1200px) {
+
+                margin-left: auto;
+                margin-right: auto;
+
+            }
+
+
+            .profile-picture {
+
+                position: relative;
+                display:flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                
+
+                i {
+
+                    position: absolute;
+                    right: 36%;
+                    background-color: white;
+                    padding: 5px;
+                    border-radius: 15px;
+                }
+
+
+            }
+
+            .buttons {
+
+                display:flex;
+                flex-direction: column;
+                margin-top: 25px;
+                gap: 10px;
+
+                .btn-theme {
+                    display:flex;
+                    justify-content: flex-start;
+                    background-color: white;
+                    font-size: 16px;
+                    padding: 10px 15px;
+                    color: black;
+
+                    &:hover {
+
+                        background-color: $theme;
+                    }
+
+                }
+
+                .active {
+
+                    background-color: $theme;
+                }
+            }
+        }
+
+        .courses {
+
+            .title-button {
+
+                display:flex;
+                justify-content: space-between;
+
+
+
+                button {
+
+                    background-color: white;
+                    color: red;
+                    padding: 8px 30px;
+
+                }
+            }
+
+            .articles {
+                
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                margin-top: 40px;
+
+                @media (max-width: 992px) {
+
+                    grid-template-columns: 1fr;
+
+                }
+
+
+
+                .article {
+                    position: relative;
+                    box-shadow: 0 0 11px rgba(33,33,33,.2);
+                    border-radius: 15px;
+                    color: #9397AD;
+                    text-decoration: none;
+
+                    &:hover {
+                        
+                        cursor: pointer;
+                        background-color:  #EFF2FC;
+                    }
+
+                    a {
+
+                        color:Grey;
+                        .fa-tag {
+                            position: absolute;
+                            right:8%;
+                            top: 4%;
+                            background-color: white;
+                            padding: 10px;
+                            border-radius: 25px;
+    
+                            &:hover {
+    
+                                color: $theme;
+                            }
+                            
+                        }
+
+                    }
+
+
+                    .best-seller {
+
+                        position: absolute;
+                        left:4%;
+                        top: 4%;
+                        @include text-s;
+                        color:white;
+                        background-color: #22C55E;
+                        padding: 2px 5px;
+                    }
+
+                    img {
+
+                        width: 100%;
+
+                    }
+
+                    .article-content {
+                        padding: 25px;
+                         
+
+                        p {
+
+                            @include text-s;
+                        }
+
+
+                        .price {
+    
+                            display: flex;
+                            color: $theme;
+                            font-size: 16px;
+                            margin-bottom: 20px;
+    
+                            .sale {
+    
+                                color: #EF4444;
+                                font-size: 18px;
+                                margin-right: 10px;
+                                align-self: center;
+                            }
+    
+                            p {
+    
+                                color: #9397AD;
+                                font-size: 16px;
+                                margin: 0;
+                                align-self: center;
+     
+                            }
+                        }
+    
+                        .hours-likes {
+                            padding-top: 25px;
+                            display:flex;
+                            gap: 25px;
+                            border-top: 1px solid #E2E5F1;
+
+                            i {
+                                align-self: center;
+                                margin-right: 5px;
+                            }
+                            .hours {
+    
+                                display:flex;
+             
+                                p {
+    
+                                    margin: 0;
+                                }
+                            }
+    
+                            .likes {
+                                display:flex;
+                                
+
+                                p {
+                                    margin: 0;
+                                }
+                            }
+                        }
+    
+                    }
+
+                    
+                }
+            }
+        }
+    }
+}

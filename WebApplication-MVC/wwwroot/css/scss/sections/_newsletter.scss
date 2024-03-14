@@ -1,0 +1,137 @@
+#newsletter {
+
+    background-color: #F3F6FF;
+    padding-top: 120px;
+    padding-bottom: 120px;
+
+    .container {
+
+        max-width: 856px;
+
+        .title {
+
+            display:flex;
+            justify-content: flex-start;
+            gap: 30px;
+            margin-bottom: 40px;
+
+            @media (max-width: 992px) {
+
+                gap: 10px;
+                justify-content: center;
+            }
+
+            h1 {
+
+                @media (max-width: 992px) {
+
+                    font-size: 32px !important;
+                    text-align: center;
+                }
+            }
+
+            img {
+
+                @media (max-width: 992px) {
+
+                    display: none;
+                }
+            }
+        }
+        
+        form {
+
+            .signup {
+
+                display:grid;
+                grid-template-columns: 1fr auto;
+                gap: 50px;
+                margin-bottom: 60px;
+
+                @media (max-width: 992px) {
+
+                    grid-template-columns: 1fr;
+                }
+
+                h5 {
+
+                    @media (max-width: 992px) {
+
+                        text-align: center;
+                    }
+                }
+
+                .checkbox {
+
+                    display:grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+
+                    @media (max-width: 768px) {
+
+                        grid-template-columns: 1fr 1fr;
+                    }
+      
+                    .box {
+                        
+                        padding: 5px;
+
+                        @media (max-width: 768px) {
+
+                            padding: 0;
+                        }
+
+                        input {
+
+                            width: 20px;
+                            height: 20px;
+                            accent-color: $theme;
+
+                        }
+    
+                        label {
+                            
+                            margin-left: 10px;
+
+                            @media (max-width: 768px) {
+
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            .input-field {
+
+                display:flex;
+                gap: 20px;
+                position: relative;
+                .field {
+
+                    border-radius: 5px;
+                    border: 1px solid grey;
+                    max-width: 650px;
+                    padding-left: 30px;
+                    width: 100%;
+                }
+
+                .btn-theme {
+
+                    padding: 10px 30px;
+                }
+
+                i {
+
+                    position: absolute;
+                    left: 1%;
+                    top: 32%;
+                    color: #B4B7C9;
+                }
+
+            }
+
+
+        }
+    }
+}

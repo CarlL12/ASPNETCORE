@@ -1,0 +1,101 @@
+﻿@using WebApplication_MVC.Models.Views
+
+
+@model SecurityViewModel
+
+@{
+    ViewData["Title"] = "Account security";
+}
+
+
+<section id="security">
+    <div class="container">
+        <div class="profile">
+            <div class="profile-picture">
+                <img src="~/images/profile/image.svg" alt="Profile picture">
+                <i class="fa-solid fa-repeat"></i>
+                <h5>@($"{Model.Profile?.FirstName} {Model.Profile?.LastName}")</h5>
+                <p>@Model.Profile?.Email</p>
+            </div>
+            <div class="buttons">
+                <a class="btn-theme" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
+                <a class="btn-theme  active" asp-controller="Account" asp-action="Security"><i class="fa-solid fa-lock"></i>Security</a>
+                <a class="btn-theme" asp-controller="Account" asp-action="SavedCourses"><i class="fa-solid fa-bookmark"></i>Saved Courses</a>
+                <a class="btn-theme" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
+            </div>
+        </div>
+        <div class="details">
+            <div class="security-information">
+                <h2>Security</h2>
+                <h5>Password</h5>
+                <form method="post" asp-controller="Account" asp-action="Security">
+                    <div class="current-password">
+                        @if(Model.BasicInfo.IsExternalAccount) 
+                        {
+                            <label asp-for=SecurityInfo.Password></label>
+                            <input asp-for="SecurityInfo.Password" disabled>
+                        }
+                        else 
+                        {
+                            <label asp-for=SecurityInfo.Password></label>
+                            <input asp-for="SecurityInfo.Password">
+                            <span asp-validation-for="SecurityInfo.Password"></span>
+                        }
+
+                    </div>
+                    <div class="new-confirm-password">
+                        <div class="new-password">
+                            @if(Model.BasicInfo.IsExternalAccount)
+                            {
+                                <label asp-for=SecurityInfo.NewPassword></label>
+                            <input asp-for="SecurityInfo.NewPassword" disabled>
+                            }
+                            else 
+                            {
+                                <label asp-for=SecurityInfo.NewPassword></label>
+                                <input asp-for="SecurityInfo.NewPassword">
+                                <span asp-validation-for="SecurityInfo.NewPassword"></span>
+                            }
+                        </div>
+                        <div class="confirm-password">
+                            @if (Model.BasicInfo.IsExternalAccount)
+                            {
+                                <label asp-for=SecurityInfo.ConfirmPassword></label>
+                            <input asp-for="SecurityInfo.ConfirmPassword" disabled>
+                            }
+                            else 
+                            {
+                                <label asp-for=SecurityInfo.ConfirmPassword></label>
+                                <input asp-for="SecurityInfo.ConfirmPassword">
+                                <span asp-validation-for="SecurityInfo.ConfirmPassword"></span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button id="cancel" class="btn-theme" type="reset"> Cancel</button>
+                        <button class="btn-theme" type="submit">Change password </button>
+                    </div>
+                </form>
+                @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"]?.ToString()))
+                {
+                    <div class="alert">
+                        @ViewData["ErrorMessage"]
+                    </div>
+                }
+                <form method="post" asp-controller="Account" asp-action="Security">
+                    <div class="delete">
+                        <h5>Delete account</h5>
+                        <p>When you delete your account, your public profile will be deactivated immediately. If you change your mind before the 14 days are up, sign in with your email and password, and we’ll send you a link to reactivate your account.</p>
+                        <input asp-for="Delete.Delete">
+                        <label asp-for=Delete.Delete></label>
+                        <span asp-validation-for="Delete.Delete"></span>
+                        <button class="btn-theme button" type="submit">Delete </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Shared/Components/_ValidationScriptPartial.cshtml")

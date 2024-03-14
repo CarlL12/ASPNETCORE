@@ -1,0 +1,138 @@
+﻿@using WebApplication_MVC.Models.Views
+@model DetailsViewModel
+
+@{
+    ViewData["Title"] = $"{@Model.ProfileInfo?.FirstName}{@Model.ProfileInfo?.LastName}";
+}
+
+
+<section id="account">
+    <div class="container">
+        <div class="profile">
+            <div class="profile-picture">
+                <img src="~/images/profile/image.svg" alt="Profile picture">
+                <i class="fa-solid fa-repeat"></i>
+                <h5>@Model.ProfileInfo?.FirstName @Model.ProfileInfo?.LastName</h5>
+                <p>@Model.ProfileInfo?.Email</p>
+            </div>
+            <div class="buttons">
+                <a class="btn-theme active" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
+                <a class="btn-theme" asp-controller="Account" asp-action="Security"><i class="fa-solid fa-lock"></i>Security</a>
+                <a class="btn-theme" asp-controller="Account" asp-action="SavedCourses"><i class="fa-solid fa-bookmark"></i>Saved Courses</a>
+                <a class="btn-theme" asp-controller="Auth" asp-action="SignOut"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
+            </div>
+        </div>
+        <div class="details">
+            <div class="basic-info">
+                <h2>Account Details</h2>
+                <h5>Basic Info</h5>
+                <form method="post" asp-controller="Account" asp-action="Details" novalidate>
+
+                    <div class="name">
+                        <div class="firstname">
+                            @if(Model.BasicInfo.IsExternalAccount)
+                            {
+                                <label asp-for=BasicInfo.FirstName></label>
+                                <input asp-for="BasicInfo.FirstName" disabled>
+                            }
+                            else
+                            {
+                                <label asp-for=BasicInfo.FirstName></label>
+                                <input asp-for="BasicInfo.FirstName">
+                                <span asp-validation-for="BasicInfo.FirstName"></span>
+                            }
+
+                        </div>
+                        <div class="lastname">
+                            @if (Model.BasicInfo.IsExternalAccount)
+                            {
+                                <label asp-for=BasicInfo.LastName></label>
+                                <input asp-for="BasicInfo.LastName" disabled>
+                            }
+                            else
+                            {
+                                <label asp-for=BasicInfo.LastName></label>
+                                <input asp-for="BasicInfo.LastName">
+                                <span asp-validation-for="BasicInfo.LastName"></span>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="email-phone">
+
+                        <div class="email">
+                            @if (Model.BasicInfo.IsExternalAccount)
+                            {
+                                <label asp-for=BasicInfo.Email></label>
+                                <input asp-for="BasicInfo.Email" disabled>
+                            }
+                            else
+                            {
+                                <label asp-for=BasicInfo.Email></label>
+                                <input asp-for="BasicInfo.Email">
+                                <span asp-validation-for="BasicInfo.Email"></span>
+                            }
+
+                        </div>
+                        <div class="phone">
+                            <label asp-for=BasicInfo.PhoneNumber></label>
+                            <input asp-for="BasicInfo.PhoneNumber">
+                            <span asp-validation-for="BasicInfo.PhoneNumber"></span>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <label asp-for=BasicInfo.Biography></label>
+                        <textarea asp-for="BasicInfo.Biography" rows="4"> </textarea>
+                    </div>
+
+                    <div class="buttons">
+                        <button id="cancel" class="btn-theme" type="reset"> Cancel</button>
+                        <button class="btn-theme" type="submit">Save changes </button>
+                    </div>
+                </form>
+            </div>
+            <div class="address">
+                <h5>Address</h5>
+                <form method="post" asp-controller="Account" asp-action="Details" novalidate>
+
+                    <div class="Address-line-1">
+                        <div class="Address1">
+                            <label asp-for=AddressInfo.Address1></label>
+                            <input asp-for="AddressInfo.Address1">
+                            <span asp-validation-for="AddressInfo.Address1"></span>
+                        </div>
+                    </div>
+                    <div class="Address-line-2">
+                        <div class="Address2">
+                            <label asp-for=AddressInfo.Address2></label>
+                            <input asp-for="AddressInfo.Address2">
+                            <span asp-validation-for="AddressInfo.Address2"></span>
+                        </div>
+                    </div>
+
+                    <div class="Postal-code-city">
+                        <div class="postal-code">
+                            <label asp-for=AddressInfo.PostalCode></label>
+                            <input asp-for="AddressInfo.PostalCode">
+                            <span asp-validation-for="AddressInfo.PostalCode"></span>
+                        </div>
+                        <div class="city">
+                            <label asp-for=AddressInfo.City></label>
+                            <input asp-for ="AddressInfo.City">
+                            <span asp-validation-for="AddressInfo.City"></span>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button id="cancel" class="btn-theme" type="reset">Cancel </button>
+                        <button class="btn-theme" type="submit">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Shared/Components/_ValidationScriptPartial.cshtml")

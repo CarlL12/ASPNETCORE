@@ -1,0 +1,175 @@
+#create-account {
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .box {
+
+            max-width: 526px;
+            width: 100%;
+            margin-top: 100px;
+            margin-bottom: 50px;
+
+            .title {
+
+                @media (max-width: 768px) {
+
+                    text-align: center;
+                }
+            }
+
+            form {
+
+                display:flex;
+                flex-direction: column;
+                gap: 25px;
+
+                @media (max-width: 768px) {
+
+                }
+
+                .name {
+                    
+                    display: flex;
+                    justify-content: space-between;
+
+                    @media (max-width: 768px) {
+
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+
+                    .firstname {
+
+                        label {
+
+                            display:block;
+                            color: #0B0F19;
+                            font-weight: 900;
+                        }
+
+                        input {
+                            display: block;
+                            width: 251px;
+                            border-radius: 5px;
+                            padding: 10px 10px;
+                            border: 1px solid grey;
+
+                            @media (max-width: 768px) {
+                                max-width: 526px;
+                                width: 100%;
+
+                            }
+                        }
+                    }
+
+                    .lastname {
+
+                        label {
+
+                            display:block;
+                            color: #0B0F19;
+                            font-weight: 900;
+                        }
+
+                        input {
+
+                            display: block;
+                            width: 251px;
+                            border-radius: 5px;
+                            padding: 10px 10px;
+                            border: 1px solid grey;
+                            
+                            @media (max-width: 768px) {
+                                max-width: 526px;
+                                width: 100%;
+
+                            }
+
+                        }   
+                    }
+                }
+
+                .email {
+
+
+                    label {
+
+                        display:block;
+                        color: #0B0F19;
+                        font-weight: 900;
+                        
+                    }
+
+                    input {
+                        display:block;
+                        max-width: 526px;
+                        width: 100%;
+                        border-radius: 5px;
+                        padding: 10px 10px;
+                        border: 1px solid grey;
+                    }
+                }
+
+                .password {
+
+
+
+                    label {
+
+                        display:block;
+                        color: #0B0F19;
+                        font-weight: 900;
+                    }
+
+                    input {
+                        display:block;
+                        max-width: 526px;
+                        width: 100%;
+                        border-radius: 5px;
+                        padding: 10px 10px;
+                        border: 1px solid grey;
+                    }
+                }
+
+                .confirm-password {
+
+
+
+                    label {
+
+                        display:block;
+                        color: #0B0F19;
+                        font-weight: 900;
+                    }
+
+                    input {
+                        display:block;
+                        max-width: 526px;
+                        width: 100%;
+                        border-radius: 5px;
+                        padding: 10px 10px;
+                        border: 1px solid grey;
+                    }
+                }
+                
+                .checkbox {
+
+                    span {
+
+                        display:block;
+                    }
+                }
+
+
+                .btn-theme-s {
+
+                    transition: background-color 0.5s ease-in-out;
+                }
+            }
+        }
+    }
+}

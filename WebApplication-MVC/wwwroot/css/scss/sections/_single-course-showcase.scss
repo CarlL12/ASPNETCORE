@@ -1,0 +1,137 @@
+#single-course-showcase {
+
+    position: relative;
+    padding-bottom: 40px;
+
+    @media (max-width: 1400px) {
+
+        background-color: #0d1427;
+    }
+    .background-image {
+
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        object-fit: contain;
+
+        @media (max-width: 1400px) {
+
+            display:none;
+        }
+    }
+
+    .container {
+        
+
+        .categories {
+
+            padding-top: 60px;
+            padding-bottom: 50px;
+
+            i {
+
+                color: rgba(255, 255, 255, 0.603);
+                
+            }
+
+            a {
+
+                color: rgb(173, 173, 173);
+                margin: 0px 13px;
+            }
+
+            .active {
+
+                color: $theme;
+            }
+        }
+
+        .section-title {
+
+            padding-bottom: 120px;
+            .tags {
+
+                display:flex;
+                gap: 13px;
+                .tag1 {
+
+                    background-color: #22C55E;
+                    color: white;
+                    padding: 0px 10px;
+
+                }
+
+                .tag2 {
+
+                    background-color: white;
+                    padding: 0px 10px;
+                }
+            }
+
+            h1 {
+
+                color: white;
+            }
+
+            .text-lg {
+
+                color: rgba(255, 255, 255, 0.562);
+                padding-bottom: 50px;
+            }
+
+            .reviews-hours-likes {
+
+                display: flex;
+
+                img {
+
+                }
+
+                p {
+
+                    color: rgba(255, 255, 255, 0.562);
+                    margin: 0;
+                    border-right: 1px solid rgba(182, 182, 182, 0.432);
+                    padding-right: 20px;
+                    
+                }
+
+                i {
+                    
+                    padding-left: 20px;
+                    color: white;
+                    align-self: center;
+                    margin-right: 7px;
+                }
+            }
+
+
+        }
+
+        .profile {
+
+            display: flex;
+            img {
+
+                margin-right: 20px;
+            }
+
+            .text {
+
+                p {
+
+                    margin: 0;
+                    color: rgba(255, 255, 255, 0.562);
+
+                }
+
+                .author {
+
+                    color: white;
+                }
+            }
+
+        }
+    }
+    
+}

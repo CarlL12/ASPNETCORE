@@ -1,0 +1,52 @@
+﻿@using WebApplication_MVC.Models.Views
+
+@model SignInViewModel
+
+
+@{
+    ViewData["Title"] = "Sign in";
+    Layout = "_Layout2";
+}
+
+
+<section id="sign-in">
+    <div class="container">
+        <div class="box">
+            <div class="title">
+                <h1>Welcome Back</h1>
+                <p>Don’t have an account yet?<a asp-controller="Auth" asp-action="SignUp"> Sign up here.</a></p>
+            </div>
+
+            <form method="post" asp-controller="Auth" asp-action="SignIn" asp-route-ReturnUrl="@ViewData["ReturnUrl"]" novalidate>
+
+                <div class="error-message">
+                    @Model?.ErrorMessage
+                </div>
+
+                <label class="label-block" asp-for=Form.Email></label>
+                <span asp-validation-for="Form.Email"></span>
+                <input class="input-block" asp-for="Form.Email">
+                <label class="label-block" asp-for=Form.Password></label>
+                <span asp-validation-for="Form.Password"></span>
+                <input class="input-block" asp-for="Form.Password">
+                <div class="remember">
+                    <input class="checkbox" asp-for="Form.RememberMe">
+                    <label class="remember-label" asp-for="Form.RememberMe"></label>
+                </div>
+                <button class="btn-theme" type="submit">Sign in</button>
+
+                <a href="">Forgot your password?</a>
+
+                <div class="external-providers">
+                    <h6>Or sign in with your social account</h6>
+                    <div class="providers">
+                        <a class="btn-gray" asp-action="Google" asp-controller="Auth"><i class="fa-brands fa-google"></i>Google</a>
+                        <a class="btn-gray" asp-action="Facebook" asp-controller="Auth"><i class="fa-brands fa-facebook"></i>Facebook</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>

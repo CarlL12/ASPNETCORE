@@ -1,0 +1,30 @@
+﻿@using WebApplication_MVC.Models.Components;
+@model CourseModel
+
+
+
+
+<a asp-controller="Account" asp-action="SingleCourse" class="article">
+    <div class="best-seller">@Model.BestSeller</div>
+    <div><i class="fa-solid fa-tag"></i></div>
+    <img src="@Url.Content(Model.Image)" alt="">
+    <div class="article-content">
+        <h5>@Model.Title</h5>
+        <p>@Model.Author</p>
+        <div class="price">
+            <div class="sale">@Model.SalePrice</div>
+            @Model.Price
+            <p>@Model.OldPrice</p>
+        </div>
+        <div class="hours-likes">
+            <div class="hours">
+                <i class="fa-duotone fa-timer"></i>
+                <p>@Model.Hours</p>
+            </div>
+            <div class="likes">
+                <i class="fa-light fa-thumbs-up"></i>
+                <p>@Model.Likes</p>
+            </div>
+        </div>
+    </div>
+</a>
