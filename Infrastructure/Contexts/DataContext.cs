@@ -8,5 +8,11 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
 {
     public DbSet<AddressEntity> Address { get; set; }
 
+    public DbSet<SubscriberEntity> Subscribers { get; set; }
+
+    public DbSet<CourseEntity> Courses { get; set; }
+
+    public DbSet<CategoryEntity> Categories { get; set; }
+
 
 }

@@ -1,5 +1,5 @@
 
-body:not(.dark-theme) {
+.light {
 
     .logo-light {
         display: block;
@@ -34,7 +34,7 @@ body:not(.dark-theme) {
 
 
 
-body.dark-theme {
+.dark {
     background-color: #0B0F19 !important;
 
     .appstore-dark {

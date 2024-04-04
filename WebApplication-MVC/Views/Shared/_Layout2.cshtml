@@ -3,6 +3,12 @@
 
 @inject SignInManager<UserEntity> _signInManager
 
+@{
+    var themeMode = Context.Request.Cookies["ThemeMode"] ?? "light";
+    var isDark = (themeMode == "dark") ? true : false;
+
+
+}
 
 
 <!DOCTYPE html>
@@ -15,7 +21,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <title>@ViewData["Title"] - WebApplication_MVC</title>
 </head>
-<body>
+<body class="@themeMode">
     <div class="wrapper">
         @if (_signInManager.IsSignedIn(User))
         {
@@ -34,7 +40,7 @@
                     <div class="btn-switch">
                         <label>Light</label>
                         <label class="switch" for="switch-mode">
-                            <input type="checkbox" id="switch-mode" />
+                            <input type="checkbox" id="switch-mode" checked="@isDark"/>
                             <div class="slider round"></div>
                         </label>
                         <label>Dark</label>
@@ -63,7 +69,7 @@
                     <div class="btn-switch">
                         <label>Light</label>
                         <label class="switch" for="switch-mode">
-                            <input type="checkbox" id="switch-mode" />
+                            <input type="checkbox" id="switch-mode" checked="@isDark" />
                             <div class="slider round"></div>
                         </label>
                         <label>Dark</label>

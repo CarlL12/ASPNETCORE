@@ -1,4 +1,5 @@
-﻿
+﻿@using Infrastructure.Models
+@model SubscribeModel
 
 
 <section id="showcase">
@@ -214,7 +215,7 @@
             <h1>Don't Want to Miss Anything?</h1>
             <img src="~/images/background/arrows.svg" alt="Curly thingy">
         </div>
-        <form action="">
+        <form asp-controller="Home" asp-action="Index" method="post">
 
             <div class="signup">
                 <h5>Sign up for Newsletters</h5>
@@ -256,11 +257,41 @@
 
             <div class="input-field">
                 <i class="fa-regular fa-envelope"></i>
-                <input class="field" type="text" placeholder="Your Email" name="mail">
-                <input class="btn-theme" type="submit" value="Subscribe*">
+                <input asp-for="@Model.Email" class="field">
+                <span asp-validation-for="@Model.Email"></span>
+                <button class="btn-theme" type="submit">Subscribe* </button>
             </div>
 
             <p>* Yes, I agree to the <a href="">terms</a> and <a href="">privacy policy. </a></p>
+
+            @if(ViewData["Status"]?.ToString() == "Success")
+            {
+                <span class="alert alert-success">
+                    You have been subscribed
+                </span>
+            }
+            else if (ViewData["Status"]?.ToString() == "AlreadyExists")
+            {
+             
+                    <span class="alert alert-warning">
+                        You have already subscribed
+                    </span>
+            }
+            else if (ViewData["Status"]?.ToString() == "Invalid")
+            {
+
+                <span class="alert alert-danger">
+                    You must enter an valid email address
+                </span>
+            }
+            else if (ViewData["Status"]?.ToString() == "ConnectionFailed")
+            {
+
+                <span class="alert alert-danger">
+                    Unable to contact the server. Please try again later.
+                </span>
+            }
+
         </form>
 
     </div>

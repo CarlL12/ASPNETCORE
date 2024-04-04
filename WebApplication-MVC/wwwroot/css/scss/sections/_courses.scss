@@ -3,185 +3,165 @@ main {
     #courses {
 
         .container {
-            
             padding-top: 55px;
             display: grid;
             grid-template-columns: 1fr;
 
             .categories {
-                
-                display:flex;
+                display: flex;
                 margin-bottom: 50px;
 
                 .active {
-
                     color: $theme;
                 }
 
                 @media (max-width: 992px) {
-
                     justify-content: center;
                 }
-                i {
 
+                i {
                     margin-right: 5px;
                     align-self: center;
                 }
 
                 .fa-arrow-right {
-
                     align-self: center;
                     margin: 0px 20px;
                 }
-    
+
                 a {
-                    
                     align-self: center;
                     color: #9397AD;
 
                     &:active {
-
                         color: $theme;
                     }
                 }
             }
-    
+
             .title-input-field {
-                
-                display:flex;
+                display: flex;
                 justify-content: space-between;
 
                 @media (max-width: 992px) {
-
                     flex-direction: column;
                 }
-                h1 {
-                    
-                    @media (max-width: 992px) {
 
+                h1 {
+
+                    @media (max-width: 992px) {
                         text-align: center;
                     }
-                    
                 }
-    
+
                 .inputs {
-                    
                     align-self: center;
-                    position: relative;
-                    display:flex;
+                    display: flex;
 
-                
-                    select {
+                    form {
 
-                        padding: 10px 110px 10px 5px;
-                        border-radius: 5px;
-                        border: 1px solid grey;
+                        select {
+                            padding: 10px 110px 10px 5px;
+                            border-radius: 5px;
+                            border: 1px solid grey;
 
-                        @media (max-width: 992px) {
-
-                            padding: 10px 10px 10px 5px;
+                            @media (max-width: 992px) {
+                                padding: 10px 10px 10px 5px;
+                            }
                         }
-                        
-                    }
 
-                    input {
+                        input {
+                            text-align: start;
+                            padding: 10px 110px 10px 5px;
+                            border-radius: 5px;
+                            border: 1px solid grey;
+                            margin-left: 25px;
 
-                        text-align: start;
-                        padding: 10px 110px 10px 5px;
-                        border-radius: 5px;
-                        border: 1px solid grey;
-                        margin-left: 25px;
-
-                        @media (max-width: 768px) {
-
-                            padding: 10px 10px 10px 5px;
+                            @media (max-width: 768px) {
+                                padding: 10px 10px 10px 5px;
+                            }
                         }
-                    }
 
-                    i {
+                        .input-search-group {
+                            position: relative;
 
-                        position: absolute;
-                        bottom: 35%;
-                        right: 2%;
+                            i {
+                                position: absolute;
+                                bottom: 35%;
+                                right: 2%;
+                            }
+                        }
                     }
                 }
-    
-   
             }
-    
+
             .articles {
-                
-                display:grid;
+                display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 30px;
                 margin-top: 40px;
 
                 @media (max-width: 1200px) {
-
                     grid-template-columns: 1fr 1fr;
                 }
 
                 @media (max-width: 768px) {
-
                     grid-template-columns: 1fr;
                 }
 
                 .article {
                     position: relative;
                     box-shadow: 0 0 11px rgba(33,33,33,.2);
-                    display:block;
+                    display: block;
                     border-radius: 15px;
                     color: #9397AD;
                     text-decoration: none;
                     transition: background-color 0.25s ease-in-out;
 
                     &:hover {
-                        
                         cursor: pointer;
-                        background-color:  #EFF2FC;
+                        background-color: #EFF2FC;
                     }
 
-                    div {
+                    button {
+                        color: Grey;
+                        position: absolute;
+                        border: none;
+                        border-radius: 25px;
+                        padding: 0;
+                        right: 8%;
+                        top: 4%;
 
-                        color:Grey;
                         .fa-tag {
-                            position: absolute;
-                            right:8%;
-                            top: 4%;
                             background-color: white;
                             padding: 10px;
-                            border-radius: 25px;;
-    
+                            border-radius: 25px;
+                            ;
+
                             &:hover {
-    
                                 color: $theme;
                             }
-                            
                         }
-
                     }
 
 
                     .best-seller {
-
                         position: absolute;
-                        left:4%;
+                        left: 4%;
                         top: 4%;
                         @include text-s;
-                        color:white;
+                        color: white;
                         background-color: #22C55E;
                         padding: 0px 5px;
                     }
 
                     img {
-
                         width: 100%;
-
                     }
 
                     .article-content {
                         padding: 25px;
-                         
+
 
                         p {
 
@@ -190,33 +170,29 @@ main {
 
 
                         .price {
-    
                             display: flex;
                             color: $theme;
                             font-size: 16px;
                             margin-bottom: 20px;
-    
+
                             .sale {
-    
                                 color: #EF4444;
                                 font-size: 18px;
                                 margin-right: 10px;
                                 align-self: center;
                             }
-    
+
                             p {
-    
                                 color: #9397AD;
                                 font-size: 16px;
                                 margin: 0;
                                 align-self: center;
-     
                             }
                         }
-    
+
                         .hours-likes {
                             padding-top: 25px;
-                            display:flex;
+                            display: flex;
                             gap: 25px;
                             border-top: 1px solid #E2E5F1;
 
@@ -224,76 +200,65 @@ main {
                                 align-self: center;
                                 margin-right: 5px;
                             }
+
                             .hours {
-    
-                                display:flex;
-             
+                                display: flex;
+
                                 p {
-    
                                     margin: 0;
                                 }
                             }
-    
+
                             .likes {
-                                display:flex;
-                                
+                                display: flex;
+
 
                                 p {
                                     margin: 0;
                                 }
                             }
                         }
-    
                     }
-
-                    
                 }
             }
-    
-            .button {
 
-                display:flex;
+            .button {
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 margin-top: 50px;
-
             }
         }
     }
 
     #get-started {
-
         padding-top: 60px;
-        .container {
 
+        .container {
             background: linear-gradient(#c0c1e4, #ececf7);
             border-radius: 10px;
-            display:flex;
+            display: flex;
             justify-content: space-between;
             gap: 100px;
             padding: 40px 100px;
 
             @media (max-width: 768px) {
-
                 padding: 20px 0px;
             }
 
             .section-title {
-
-                display:flex;
+                display: flex;
                 flex-direction: column;
                 align-self: center;
                 gap: 25px;
 
                 @media (max-width: 992px) {
-
                     text-align: center;
                 }
 
                 h1 {
 
                     p {
-
                         color: $theme;
                         display: inline;
                         margin-right: 10px;
@@ -303,13 +268,11 @@ main {
 
 
                 a {
-                
                     display: inline-flex;
                     align-self: flex-start;
                     padding: 15px 40px;
 
                     @media (max-width: 992px) {
-
                         align-self: center;
                     }
                 }
@@ -318,8 +281,7 @@ main {
             img {
 
                 @media (max-width: 992px) {
-
-                    display:none;
+                    display: none;
                 }
             }
         }

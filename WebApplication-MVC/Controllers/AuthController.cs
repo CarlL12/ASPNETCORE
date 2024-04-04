@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Text;
 using WebApplication_MVC.Models.Views;
 
 namespace WebApplication_MVC.Controllers;
 
-public class AuthController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager) : Controller
+public class AuthController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, HttpClient httpClient, IConfiguration configuration) : Controller
 {
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
+    private readonly HttpClient _httpClient = httpClient;
+    private readonly IConfiguration _configuration = configuration;
+
 
 
     [HttpGet]
@@ -36,6 +41,25 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
 
             if (result.Succeeded)
             {
+
+
+                var content = new StringContent(JsonConvert.SerializeObject(model.Form), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"https://localhost:7294/api/Auth?key={_configuration["ApiKey"]}", content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    var token = await response.Content.ReadAsStringAsync();
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Expires = DateTime.Now.AddDays(1)
+                    };
+
+                    Response.Cookies.Append("AccessToken", token, cookieOptions);
+                }
+
                 if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);
 
@@ -94,6 +118,7 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
     public new async Task<IActionResult> SignOut()
     {
 
+        Response.Cookies.Delete("AccessToken");
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
@@ -107,13 +132,13 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
         return new ChallengeResult("Facebook", authProps);
     }
 
-    [HttpGet] 
+    [HttpGet]
 
     public async Task<IActionResult> FacebookCallback()
     {
         var info = await _signInManager.GetExternalLoginInfoAsync();
 
-        if(info != null)
+        if (info != null)
         {
             var userEntity = new UserEntity
             {
@@ -127,18 +152,18 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
 
             var user = await _userManager.FindByEmailAsync(userEntity.Email);
 
-            if(user == null)
+            if (user == null)
             {
                 var result = await _userManager.CreateAsync(userEntity);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     user = await _userManager.FindByEmailAsync(userEntity.Email);
                 }
             }
             if (user != null)
             {
-                if(user.FirstName != userEntity.FirstName || user.LastName != userEntity.LastName || user.Email != userEntity.Email)
+                if (user.FirstName != userEntity.FirstName || user.LastName != userEntity.LastName || user.Email != userEntity.Email)
                 {
                     user.FirstName = userEntity.FirstName;
                     user.LastName = userEntity.LastName;
@@ -156,7 +181,7 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
             }
         }
 
-        
+
         return RedirectToAction("Index", "Home");
     }
 

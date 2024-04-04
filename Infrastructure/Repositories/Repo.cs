@@ -34,7 +34,7 @@ public abstract class Repo<TEntity>(DataContext context) where TEntity : class
            IEnumerable<TEntity> result = await _context.Set<TEntity>().ToListAsync();
 
 
-            return result; ;
+            return result;
 
         }
         catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }

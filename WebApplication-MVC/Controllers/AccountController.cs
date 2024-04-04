@@ -5,6 +5,8 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using WebApplication_MVC.Models.Views;
 
 namespace WebApplication_MVC.Controllers
@@ -12,11 +14,13 @@ namespace WebApplication_MVC.Controllers
 
 
     [Authorize]
-    public class AccountController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, AddressService addressService) : Controller
+    public class AccountController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, AddressService addressService, IConfiguration configuration, HttpClient httpClient) : Controller
     {
         private readonly UserManager<UserEntity> _userManager = userManager;
         private readonly SignInManager<UserEntity> _signInManager = signInManager;
         private readonly AddressService _addressService = addressService;
+        private readonly IConfiguration _configuration = configuration;
+        private readonly HttpClient _httpClient = httpClient;
 
         [HttpGet]
         [Route("/account/details")]
@@ -35,7 +39,7 @@ namespace WebApplication_MVC.Controllers
             if (viewModel.AddressInfo == null)
                 viewModel.AddressInfo = await PopulateAddressInfoAsync();
 
-             viewModel.ProfileInfo = await PopulateProfileInfoasync();
+            viewModel.ProfileInfo = await PopulateProfileInfoasync();
 
             return View(viewModel);
         }
@@ -48,7 +52,7 @@ namespace WebApplication_MVC.Controllers
 
             if (viewModel.BasicInfo != null)
             {
-                if (viewModel.BasicInfo.FirstName != null &&  viewModel.BasicInfo.LastName != null && viewModel.BasicInfo.Email !=null)
+                if (viewModel.BasicInfo.FirstName != null && viewModel.BasicInfo.LastName != null && viewModel.BasicInfo.Email != null)
                 {
                     var user = await _userManager.GetUserAsync(User);
                     if (user != null)
@@ -69,7 +73,7 @@ namespace WebApplication_MVC.Controllers
 
                         }
                     }
-                }            
+                }
             }
 
             if (viewModel.AddressInfo != null)
@@ -80,7 +84,7 @@ namespace WebApplication_MVC.Controllers
 
                     var addressResult = await addressService.GetOrCreateAddress(viewModel.AddressInfo);
 
-                    if(addressResult != null)
+                    if (addressResult != null)
                     {
                         var user = await _userManager.GetUserAsync(User);
                         if (user != null)
@@ -142,18 +146,18 @@ namespace WebApplication_MVC.Controllers
         public async Task<IActionResult> Security(SecurityViewModel model)
         {
 
-            if(model.SecurityInfo != null)
+            if (model.SecurityInfo != null)
             {
 
-                if(model.SecurityInfo.Password != null && model.SecurityInfo.NewPassword != null && model.SecurityInfo.ConfirmPassword != null)
+                if (model.SecurityInfo.Password != null && model.SecurityInfo.NewPassword != null && model.SecurityInfo.ConfirmPassword != null)
                 {
                     var user = await _userManager.GetUserAsync(User);
 
-                    if(user != null)
+                    if (user != null)
                     {
-                        var result = await _userManager.ChangePasswordAsync(user,model.SecurityInfo.Password,model.SecurityInfo.NewPassword);
+                        var result = await _userManager.ChangePasswordAsync(user, model.SecurityInfo.Password, model.SecurityInfo.NewPassword);
 
-                        if(!result.Succeeded)
+                        if (!result.Succeeded)
                         {
                             ModelState.AddModelError("IncorrectValues", "Something went wrong!");
                             ViewData["ErrorMessage"] = "Something went wrong!";
@@ -167,16 +171,16 @@ namespace WebApplication_MVC.Controllers
 
                 ModelState.AddModelError("IncorrectValues", "Something went wrong!");
                 ViewData["ErrorMessage"] = "Something went wrong!";
-                
+
             }
 
-            if(model.Delete != null)
+            if (model.Delete != null)
             {
-                if(model.Delete.Delete == true)
+                if (model.Delete.Delete == true)
                 {
                     var user = await _userManager.GetUserAsync(User);
 
-                    if(user != null )
+                    if (user != null)
                     {
                         var result = await _userManager.DeleteAsync(user);
 
@@ -203,19 +207,28 @@ namespace WebApplication_MVC.Controllers
             return View();
         }
 
-        public IActionResult Courses()
+        public async Task<IActionResult> Courses()
         {
             ViewData["Title"] = "Courses";
 
-            var viewModel = new CoursesViewModel();
-            viewModel.AddInformation();
+            if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
             {
 
-            };
-            return View(viewModel);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await _httpClient.GetAsync($"https://localhost:7294/api/Courses?key={_configuration["ApiKey"]}");
+                var json = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<IEnumerable<CourseModel>>(json);
+
+                return View(data);
+            }
+
+            return View();
+
+
         }
 
-   
+
 
         public IActionResult SingleCourse()
         {
@@ -228,7 +241,7 @@ namespace WebApplication_MVC.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
-            if (user != null) 
+            if (user != null)
             {
                 DetailsViewModel viewModel = new DetailsViewModel
                 {
@@ -254,7 +267,7 @@ namespace WebApplication_MVC.Controllers
                     AddressInfo = new AddressInfoModel()
                 };
 
-                if(viewModel.BasicInfo.AddressId == null)
+                if (viewModel.BasicInfo.AddressId == null)
                 {
                     return viewModel;
                 }
@@ -262,7 +275,7 @@ namespace WebApplication_MVC.Controllers
                 {
                     var result = await addressService.GetAddressAsync(viewModel.BasicInfo.AddressId);
 
-                    if(result != null)
+                    if (result != null)
                     {
                         viewModel.AddressInfo.Address1 = result.Address1;
                         viewModel.AddressInfo.Address2 = result.Address2;
@@ -273,7 +286,7 @@ namespace WebApplication_MVC.Controllers
 
                     return viewModel;
                 }
-         
+
             }
 
             return null!;
@@ -283,7 +296,7 @@ namespace WebApplication_MVC.Controllers
         {
             var viewModel = await PopulateDetailsViewModel();
 
-            if(viewModel.BasicInfo != null)
+            if (viewModel.BasicInfo != null)
             {
                 var infoModel = new BasicInfoModel
                 {
@@ -335,7 +348,7 @@ namespace WebApplication_MVC.Controllers
         {
             var viewModel = await PopulateDetailsViewModel();
 
-            if(viewModel.AddressInfo != null)
+            if (viewModel.AddressInfo != null)
             {
                 var infoModel = new AddressInfoModel
                 {

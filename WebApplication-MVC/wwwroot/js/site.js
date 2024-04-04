@@ -1,20 +1,17 @@
 ﻿
 document.addEventListener('DOMContentLoaded', function () {
-    const switchModeCheckbox = document.getElementById('switch-mode');
+    let sw = document.getElementById('switch-mode');
 
-    const storedTheme = localStorage.getItem('theme');
-    console.log('Stored Theme:', storedTheme); 
+      sw.addEventListener('change', function () {
+        let theme = this.checked ? "dark" : "light"
 
-    if (storedTheme) {
-        document.body.classList.toggle('dark-theme', storedTheme === 'dark');
-        switchModeCheckbox.checked = storedTheme === 'dark';
-    }
-
-    switchModeCheckbox.addEventListener('change', function () {
-        const isDarkMode = switchModeCheckbox.checked;
-        document.body.classList.toggle('dark-theme', isDarkMode);
-
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+          fetch(`/settings/changetheme?theme=${theme}`)
+              .then(res => {
+                  if (res.ok)
+                      window.location.reload();
+                  else
+                      console.log("hello world!");
+              })
     });
 
 });

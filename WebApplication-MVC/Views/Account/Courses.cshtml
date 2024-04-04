@@ -1,6 +1,6 @@
-﻿
-@using WebApplication_MVC.Models.Views
-@model CoursesViewModel
+﻿@using Infrastructure.Models
+
+@model IEnumerable<CourseModel>
 
 
 
@@ -15,240 +15,54 @@
         <div class="title-input-field">
             <h1>Courses</h1>
             <div class="inputs">
-                <select name="categories" required>
-                    <option value="" disabled selected hidden>All categories</option>
-                    <option value="frontend">Frontend</option>
-                    <option value="backend">Backend</option>
-                    <option value="fullstack">Fullstack</option>
-                </select>
-                <input type="search" placeholder="Search courses">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <form class="filters">
+
+                    <div class"select">
+                        <div class="selected">All categories</div>
+                        <div class="select-options">
+                            <div class="option" data-value="all">All categories</div>
+                        </div>
+                    </div>
+
+                    <div class="input-search-group">
+                        <input id="searchQuery" name="searchQuery" placeholder="Search courses"/>
+                        <i class="fa-regular fa-search"></i>
+                    </div>
+
+                </form>
             </div>
         </div>
 
         <div class="articles">
 
-
-            @foreach (var course in Model.Courses)
+            @foreach(var course in Model)
             {
-                @await Html.PartialAsync("~/Views/Shared/Components/_Course.cshtml", course)
+
+                <a asp-controller="Account" asp-action="SingleCourse" asp-route-id="@course.Id" class="article">
+                    <div class="best-seller">@course.BestSeller</div>
+                    <button asp-action="Join" asp-controller="Account" asp-route-id="@course.Id"><i class="fa-solid fa-tag"></i></button>
+                    <img src="@Url.Content(course.Image)" alt="">
+                    <div class="article-content">
+                        <h5>@course.Title</h5>
+                        <p>@course.Author</p>
+                        <div class="price">
+                            <div class="sale">@course.SalePrice</div>
+                            @course.Price
+                            <p>@course.OldPrice</p>
+                        </div>
+                        <div class="hours-likes">
+                            <div class="hours">
+                                <i class="fa-duotone fa-timer"></i>
+                                <p>@course.Hours</p>
+                            </div>
+                            <div class="likes">
+                                <i class="fa-light fa-thumbs-up"></i>
+                                <p>@course.Likes</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             }
-
-@*              <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller">Best seller</div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-1.svg" alt="">
-                <div class="article-content">
-                    <h5>Fullstack Web Developer Course from Scratch</h5>
-                    <p>By Robert Fox</p>
-                    <div class="price">$12.50</div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>220 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>94% (4.2K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller" ></div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-2.svg"  alt="">
-                <div class="article-content">
-                    <h5>HTML, CSS, JavaScript Web Developer</h5>
-                    <p>By Jenny Wilson & Marvin McKinney</p>
-                    <div class="price">$15.99</div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">    
-                <div class="best-seller"></div>
-                <div><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-3.svg"  alt="">
-                <div class="article-content">
-                    <h5>Learn JMETER from Scratch on Live Apps-Performance Testing</h5>
-                    <p>By Jenny Wilson</p>
-                    <div class="price">
-                        <div class="sale"></div>
-                        $14.50
-                        <p></p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller" href=""></div>
-                <div href=""><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-4.svg"  alt="">
-                <div class="article-content">
-                    <h5>The Complete Front-End Web Development Course</h5>
-                    <p>By Albert Flores</p>
-                    <div class="price">
-                        <div class="sale">$9.99</div>
-                        <p>$44.99</p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>100 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>98% (2.7K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller" >Best seller</div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-5.svg"  alt="">
-                <div class="article-content">
-                    <h5>iOS & Swift - The Complete iOS App Development Course</h5>
-                    <p>By Marvin McKinney</p>
-                    <div class="price">
-                        <div class="sale"></div>
-                        $15.99
-                        <p></p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller"></div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-6.svg"  alt="">
-                <div class="article-content">
-                    <h5>Data Science & Machine Learning with Python</h5>
-                    <p>By Esther Howard</p>
-                    <div class="price">
-                        <div class="sale"></div>
-                        $11.20
-                        <p></p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller" ></div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-7.svg"  alt="">
-                <div class="article-content">
-                    <h5>Creative CSS Drawing Course: Make Art With CSS</h5>
-                    <p>By Robert Fox</p>
-                    <div class="price">
-                        <div class="sale"></div>
-                        $10.50
-                        <p></p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>220 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>94% (4.2K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller"></div>
-                <div ><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-8.svg"  alt="">
-                <div class="article-content">
-                    <h5>Blender Character Creator v2.0 for Video Games Design</h5>
-                    <p>By Ralph Edwards</p>
-                    <div class="price">
-                        <div class="sale"></div>
-                        $18.99
-                        <p></p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a asp-controller="Account" asp-action="SingleCourse" class="article">
-                <div class="best-seller" ></div>
-                 <div><i class="fa-solid fa-tag"></i></div>
-                <img src="~/images/articles/article-9.svg"  alt="">
-                <div class="article-content">
-                    <h5>The Ultimate Guide to 2D Mobile Game Development with Unity</h5>
-                    <p>By Albert Flores</p>
-                    <div class="price">
-                        <div class="sale">$12.99</div>
-                        <p>$44.99</p>
-                    </div>
-                    <div class="hours-likes">
-                        <div class="hours">
-                            <i class="fa-duotone fa-timer"></i>
-                            <p>160 hours</p>
-                        </div>
-                        <div class="likes">
-                            <i class="fa-light fa-thumbs-up"></i>
-                            <p>92% (3.1K)</p>
-                        </div>
-                    </div>
-                </div>
-            </a>  *@
 
 
         </div>

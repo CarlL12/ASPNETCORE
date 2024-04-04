@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
+var configuration = builder.Configuration;
 
-
-
+builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
@@ -35,15 +35,15 @@ builder.Services.ConfigureApplicationCookie(x =>
 builder.Services.AddAuthentication()
     .AddFacebook(x =>
     {
-        x.AppId = "";
-        x.AppSecret = "";
+        x.AppId = configuration["FacebookAuth:AppId"]!;
+        x.AppSecret = configuration["FacebookAuth:AppSecret"]!;
         x.Fields.Add("first_name");
         x.Fields.Add("last_name");
     })
     .AddGoogle(x =>
     {
-        x.ClientId = "";
-        x.ClientSecret = "";
+        x.ClientId = configuration["GoogleAuth:ClientId"]!;
+        x.ClientSecret = configuration["GoogleAuth:ClientSecret"]!;
     });
 
 
