@@ -1,4 +1,10 @@
-﻿
+﻿@using WebApplication_MVC.Models.Views
+
+@model SingleCourseViewModel
+
+@{
+    ViewData["Title"] = "Single courses";
+}
 
 <section id="single-course-showcase">
     <img class="background-image" src="~/images/background/single_course_background.svg" alt="">
@@ -7,24 +13,27 @@
             <i class="fa-light fa-house"></i>
             <a asp-controller="Home" asp-action="Index">Home</a>
             <i class="fa-light fa-arrow-right"></i>
-            <a class="active " href="courses.html">Courses</a>
+            <a href="courses.html">Courses</a>
             <i class="fa-light fa-arrow-right"></i>
-            <a class="active" href="">Fullstack Web Developer Course from Scratch</a>
+            <a asp-action="SingleCourse" asp-controller="Account" asp-route-id="{@Model.Course.Id}" class="active ">@Model.Course.Title </a>
         </div>
         <div class="section-title">
             <div class="tags">
-                <div class="tag1">Best Seller</div>
+                @if(Model.Course.BestSeller != null)
+                {
+                  <div class="tag1">@Model.Course.BestSeller</div>
+                }
                 <div class="tag2">Digital</div>
             </div>
-            <h1>Fullstack Web Developer Course from Scratch</h1>
+            <h1>@Model.Course.Title</h1>
             <div class="text-lg">Egestas feugiat lorem eu neque suspendisse ullamcorper scelerisque aliquam mauris.</div>
             <div class="reviews-hours-likes">
                 <img src="~/images/icons/rating.svg" alt="">
                 <p>(1.2K reviews)</p>
                 <i class="fa-light fa-thumbs-up"></i>
-                <p>5K likes</p>
+                <p>@Model.Course.Likes</p>
                 <i class="fa-duotone fa-timer"></i>
-                <p>148 hours</p>
+                <p>@Model.Course.Hours</p>
             </div>
         </div>
 
@@ -32,7 +41,7 @@
             <img src="~/images/profile/profile_1.svg" alt="">
             <div class="text">
                 <p class="author">Created by</p>
-                <p>Albert Flores</p>
+                <p>@Model.Course.Author</p>
             </div>
         </div>
     </div>
@@ -56,7 +65,7 @@
             </div>
             <div class="includes-box">
                 <h4>This course includes:</h4>
-                <p><i class="fa-solid fa-video"></i>148 hours on-demand video</p>
+                <p><i class="fa-solid fa-video"></i>@Model.Course.Hours on-demand video</p>
 
                 <p><i class="fa-solid fa-download"></i>25 downloadable resources</p>
 
@@ -66,8 +75,9 @@
 
                 <p><i class="fa-solid fa-newspaper"></i>18 articles</p>
                 <div class="price">
-                    <h2>$28.99</h2>
-                    <h5><s>$49.00</s></h5>
+                    <h2>@Model.Course.Price</h2>
+                    <h2>@Model.Course.SalePrice</h2>
+                    <h5><s>@Model.Course.OldPrice</s></h5>
                 </div>
                 <a class="btn-theme" href="">Join course</a>
             </div>
@@ -125,7 +135,7 @@
                 <img class="background" src="~/images/background/pattern.svg" alt="">
                 <div class="text">
                     <h5>Learn from the best</h5>
-                    <h1>Albert Flores</h1>
+                    <h1>@Model.Course.Author</h1>
                     <p>Dolor ipsum amet cursus quisque porta adipiscing. Lorem convallis malesuada sed maecenas. Ac dui at vitae mauris cursus in nullam porta sem. Quis pellentesque elementum ac bibendum. Nunc aliquam in tortor facilisis. Vulputate eget risus, metus phasellus. Pellentesque faucibus amet, eleifend diam quam condimentum convallis ultricies placerat. Duis habitasse placerat amet, odio pellentesque rhoncus, feugiat at. Eget pellentesque tristique felis magna fringilla.</p>
                     <div class="buttons">
                         <a class="btn-theme youtube" href=""><i class="fa-brands fa-youtube"></i>240k subscribers</a>

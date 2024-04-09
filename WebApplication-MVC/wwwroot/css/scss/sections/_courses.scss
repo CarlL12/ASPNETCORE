@@ -55,10 +55,54 @@ main {
                 }
 
                 .inputs {
-                    align-self: center;
-                    display: flex;
 
-                    form {
+                    .filters {
+                        align-self: center;
+                        display: flex;
+
+                        .select {
+                            position: relative;
+                            display: inline-block;
+
+                            .selected {
+                                text-align: start;
+                                padding: 10px 110px 10px 5px;
+                                border-radius: 5px;
+                                border: 1px solid grey;
+                                margin-left: 25px;
+                                cursor: pointer;
+                            }
+
+                            .select-options {
+                                display: none;
+                                position: absolute;
+                                background-color: white;
+                                border-radius: 5px;
+                                border: 1px solid grey;
+                                margin-left: 25px;
+                                overflow: auto;
+                                z-index: 999;
+                            }
+
+                            .option {
+                                padding: 5px 50px 6px 3px;
+                                cursor: pointer;
+
+                                &:hover {
+                                    background-color: #ddd;
+                                }
+                            }
+
+                            &.open {
+                                .selected {
+                                    background-color: #ddd;
+                                }
+
+                                .select-options {
+                                    display: block;
+                                }
+                            }
+                        }
 
                         select {
                             padding: 10px 110px 10px 5px;
@@ -123,7 +167,7 @@ main {
                         background-color: #EFF2FC;
                     }
 
-                    button {
+                    a {
                         color: Grey;
                         position: absolute;
                         border: none;
@@ -171,7 +215,7 @@ main {
 
                         .price {
                             display: flex;
-                            color: $theme;
+                            color: #6366F1;
                             font-size: 16px;
                             margin-bottom: 20px;
 
@@ -227,6 +271,16 @@ main {
                 justify-content: center;
                 align-items: center;
                 margin-top: 50px;
+
+                span {
+
+                    margin-right : 5px;
+                }
+
+                .active {
+
+                    background-color: grey;
+                }
             }
         }
     }

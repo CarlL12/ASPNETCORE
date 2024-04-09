@@ -1,11 +1,12 @@
 ﻿using Infrastructure.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[UseApiKey]
 public class CategoryController(CategoryService categoryService) : ControllerBase
 {
     private readonly CategoryService _categoryService = categoryService;

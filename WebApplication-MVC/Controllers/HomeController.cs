@@ -61,9 +61,42 @@ namespace WebApplication_MVC.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
+
+            var model = new ContactFormModel();
+
             ViewData["Title"] = "Contact us";
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactFormModel model)
+        {
+
+            if(ModelState.IsValid)
+            {
+                using var http = new HttpClient();
+
+                var url = $"https://localhost:7294/api/Contact?key={_configuration["ApiKey"]}";
+
+                var response = await http.PostAsJsonAsync(url, model);
+
+                model.Sent = true;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    model.Succeeded = true;
+
+                    return View(model);
+                }
+                else
+                {
+                    model.Succeeded = false;
+                    return View(model);
+                }
+            }
             return View();
         }
 

@@ -13,12 +13,13 @@ public class CategoryService(CategoryRepository repository)
     {
         List<CategoryModel> list = new List<CategoryModel>();
 
-        CategoryModel model = new CategoryModel();
 
         var categories = await _repository.GetAllAsync();
 
         foreach(var category in categories)
         {
+            CategoryModel model = new CategoryModel();
+
             model.CategoryName = category.CategoryName;
             model.Id = category.Id;
             list.Add(model);

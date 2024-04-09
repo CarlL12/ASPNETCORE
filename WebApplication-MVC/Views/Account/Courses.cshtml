@@ -1,6 +1,7 @@
 ﻿@using Infrastructure.Models
+@using WebApplication_MVC.Models.Views
 
-@model IEnumerable<CourseModel>
+@model CoursesViewModel
 
 
 
@@ -17,10 +18,17 @@
             <div class="inputs">
                 <form class="filters">
 
-                    <div class"select">
+                    <div class="select">
                         <div class="selected">All categories</div>
                         <div class="select-options">
                             <div class="option" data-value="all">All categories</div>
+                            @if (Model.Categories != null)
+                            {
+                                foreach(var category in Model.Categories)
+                                {
+                                    <div class="option" data-value="@category.CategoryName">@category.CategoryName</div>
+                                }
+                            }
                         </div>
                     </div>
 
@@ -28,27 +36,32 @@
                         <input id="searchQuery" name="searchQuery" placeholder="Search courses"/>
                         <i class="fa-regular fa-search"></i>
                     </div>
-
                 </form>
             </div>
         </div>
 
         <div class="articles">
 
-            @foreach(var course in Model)
+            @foreach(var course in Model.Courses!)
             {
 
-                <a asp-controller="Account" asp-action="SingleCourse" asp-route-id="@course.Id" class="article">
+                <div onclick="location.href='@Url.Action("SingleCourse", "Account", new {id = @course.Id})'" class="article">
                     <div class="best-seller">@course.BestSeller</div>
-                    <button asp-action="Join" asp-controller="Account" asp-route-id="@course.Id"><i class="fa-solid fa-tag"></i></button>
+                    <a asp-action="Join" asp-controller="Account" asp-route-id="@course.Id"><i class="fa-solid fa-tag"></i></a>
                     <img src="@Url.Content(course.Image)" alt="">
                     <div class="article-content">
                         <h5>@course.Title</h5>
                         <p>@course.Author</p>
                         <div class="price">
-                            <div class="sale">@course.SalePrice</div>
-                            @course.Price
-                            <p>@course.OldPrice</p>
+                            @if(course.Price != null)
+                            {
+                                <div> @course.Price</div>
+                            }
+                            else
+                            {
+                                <div class="sale">@course.SalePrice</div>
+                                <s><p>@course.OldPrice</p></s>
+                            }
                         </div>
                         <div class="hours-likes">
                             <div class="hours">
@@ -61,14 +74,28 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             }
 
 
         </div>
-        <div class="button">
-            <img src="~/images/articles/pagination.svg" alt="">
-        </div>
+        @if (Model.Pageination != null && Model.Pageination.TotalPages > 1)
+        {
+            <div class="button">
+                @for (int i = 1; i <= Model.Pageination.TotalPages; i++)
+                {
+                    if(i == Model.Pageination.CurrentPage)
+                    {
+                        <span class="btn-social active">@i</span>
+                    }
+                    else
+                    {
+                        <a class="btn-social" href="@Url.Action("Courses", new {pageNumber = i, pageSize = Model.Pageination.PageSize})">@i</a>
+                    }
+                }
+            </div>
+        }
+
     </div>
 
 </section>

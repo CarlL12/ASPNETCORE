@@ -1,4 +1,6 @@
-﻿
+﻿@using WebApplication_MVC.Models.Views
+
+@model SavedCoursesViewModel
 
 <section id="saved-courses">
     <div class="container">
@@ -7,14 +9,14 @@
             <div class="profile-picture">
                 <img src="~/images/profile/image.svg" alt="Profile picture">
                 <i class="fa-solid fa-repeat"></i>
-                <h5>John Doe</h5>
-                <p>john.doe@domain.com</p>
+                <h5>@Model.Profile?.FirstName @Model.Profile?.LastName</h5>
+                <p>@Model.Profile?.Email</p>
             </div>
             <div class="buttons">
                 <a class="btn-theme" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
                 <a class="btn-theme" asp-controller="Account" asp-action="Security"><i class="fa-solid fa-lock"></i>Security</a>
                 <a class="btn-theme active" asp-controller="Account" asp-action="SavedCourses"><i class="fa-solid fa-bookmark"></i>Saved Courses</a>
-                <a class="btn-theme" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
+                <a class="btn-theme" asp-controller="Auth" asp-action="SignOut"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
             </div>
         </div>
 

@@ -201,26 +201,53 @@ namespace WebApplication_MVC.Controllers
 
         }
 
-        public IActionResult SavedCourses()
+        public async Task<IActionResult> SavedCourses()
         {
             ViewData["Title"] = "Saved courses";
-            return View();
+
+            var viewModel = new SavedCoursesViewModel();
+
+            if (viewModel.BasicInfo == null)
+                viewModel.BasicInfo = await PopulateBasicInfoAsync();
+
+            viewModel.Profile = await PopulateProfileInfoasync();
+
+            return View(viewModel);
         }
 
-        public async Task<IActionResult> Courses()
+        public async Task<IActionResult> Courses(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 6)
         {
             ViewData["Title"] = "Courses";
 
             if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
             {
-
+                CoursesViewModel viewModel = new CoursesViewModel();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await _httpClient.GetAsync($"https://localhost:7294/api/Courses?key={_configuration["ApiKey"]}");
-                var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<IEnumerable<CourseModel>>(json);
+                var responseCourses = await _httpClient.GetAsync($"https://localhost:7294/api/Courses?key={_configuration["ApiKey"]}&category={Uri.UnescapeDataString(category)}&searchQuery={Uri.UnescapeDataString(searchQuery)}&pageNumber={pageNumber}&pageSize={pageSize}");
 
-                return View(data);
+                var jsonCourses = await responseCourses.Content.ReadAsStringAsync();
+                var dataCourses = JsonConvert.DeserializeObject<CourseResult>(jsonCourses);
+                if(dataCourses != null)
+                {
+                    viewModel.Courses = dataCourses!.Course;
+                    viewModel.Pageination = new PaginationModel
+                    {
+                        PageSize = pageSize,
+                        CurrentPage = pageNumber,
+                        TotalPages = dataCourses.TotaltPages,
+                        TotalItems = dataCourses.TotalItems
+                    };
+                }
+                
+
+                var responseCategory = await _httpClient.GetAsync($"https://localhost:7294/api/Category?key={_configuration["ApiKey"]}");
+                var jsonCategory = await responseCategory.Content.ReadAsStringAsync();
+                var dataCategory = JsonConvert.DeserializeObject<IEnumerable<CategoryModel>>(jsonCategory);
+                viewModel.Categories = dataCategory;
+
+
+                return View(viewModel);
             }
 
             return View();
@@ -230,10 +257,25 @@ namespace WebApplication_MVC.Controllers
 
 
 
-        public IActionResult SingleCourse()
+        public async Task<IActionResult> SingleCourse(int id)
         {
-            ViewData["Title"] = "Single courses";
-            return View();
+
+            if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
+            {
+                SingleCourseViewModel viewModel = new SingleCourseViewModel();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var responseCourse = await _httpClient.GetAsync($"https://localhost:7294/api/Courses/{id}?key={_configuration["ApiKey"]}");
+
+                var jsonCourse = await responseCourse.Content.ReadAsStringAsync();
+                var dataCourse = JsonConvert.DeserializeObject<CourseModel>(jsonCourse);
+
+                viewModel.Course = dataCourse!;
+
+                return View(viewModel);
+            }
+
+                return View();
         }
 
 

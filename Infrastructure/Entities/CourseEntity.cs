@@ -25,4 +25,7 @@ public class CourseEntity
     public int? categoryId { get; set; }
 
     public CategoryEntity? Category { get; set; }
+
+    public ICollection<SavedCourseEntity>? SavedCourse { get; set; }
+
 }

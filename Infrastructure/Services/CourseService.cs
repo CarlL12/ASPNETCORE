@@ -9,12 +9,12 @@ public class CourseService(CourseRepository repository)
 {
     private readonly CourseRepository _repository = repository;
 
-    public async Task<IEnumerable<CourseModel>> GetAllAsync()
+    public async Task<IEnumerable<CourseModel>> GetAllAsync(string category, string searchQuery)
     {
         List<CourseModel> list = new List<CourseModel>(); 
         
 
-        var courses = await _repository.GetAllAsync();
+        var courses = await _repository.GetAllAsync(category, searchQuery);
 
         foreach (var course in courses)
         {
@@ -22,7 +22,7 @@ public class CourseService(CourseRepository repository)
 
             model.Hours = course.Hours;
             model.Author = course.Author;
-            model.OldPrice = course.Price;
+            model.OldPrice = course.OldPrice;
             model.SalePrice = course.SalePrice;
             model.Price = course.Price;
             model.BestSeller = course.BestSeller;

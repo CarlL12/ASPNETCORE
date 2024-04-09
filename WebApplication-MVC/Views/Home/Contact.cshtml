@@ -1,4 +1,8 @@
-﻿<section id="contact">
+﻿@using Infrastructure.Models
+@model ContactFormModel
+
+
+<section id="contact">
     <div class="container">
         <div class="contact-us">
 
@@ -33,32 +37,53 @@
         <div class="contact-inputs">
             <h2>Get In Contact With Us</h2>
 
-            <form action="">
+            <form method="post" asp-controller="Home" asp-action="Contact">
                 <div class="name">
-                    <label for="name">Full name</label>
-                    <input type="text" name="name" placeholder="Enter your full name">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name">
                 </div>
                 <div class="email">
-                    <label for="email">Email address</label>
-                    <input type="email" name="email" placeholder="Enter your email address">
+                    <label asp-for="Email"></label>
+                    <span asp-validation-for="Email"></span>
+                    <input asp-for="Email">
                 </div>
 
                 <div class="services">
                     <label for="service">Service</label>
-                    <select name="service" required>
+                    <select asp-for="Service">
                         <option value="" name="service" disabled selected hidden>Choose the service you are interested in</option>
                         <option value="frontend">Frontend</option>
                         <option value="backend">Backend</option>
                         <option value="fullstack">Fullstack</option>
                     </select>
+                    <span></span>
                 </div>
                 <div class="message">
-                    <label for="message">Message</label>
-                    <textarea name="bio" rows="10"> Enter your message here...</textarea>
+                    <label asp-for="Message"></label>
+                    <span asp-validation-for="Message"></span>
+                    <textarea asp-for="Message" rows="10"></textarea>
                 </div>
                 <div class="buttons">
-                    <input class="btn-theme" type="button" value="Send Contact Request">
+                    <button class="btn-theme" type="submit">Send Contact Request</button>
+
                 </div>
+
+                @if (Model != null)
+                {
+                    if(Model.Sent)
+                    {
+                        if (Model.Succeeded)
+                        {
+                            <div class="succeeded-true"> Message Sent!</div>
+                        }
+                        else
+                        {
+                            <div class="succeeded-false"> Could not send message!</div>
+                        }
+                    }
+
+                }
+
             </form>
         </div>
     </div>

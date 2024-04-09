@@ -16,6 +16,7 @@ builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<SubscriberService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<ContactRepository>();
 builder.Services.RegisterJwt(builder.Configuration);
 
 

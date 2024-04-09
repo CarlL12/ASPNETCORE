@@ -18,7 +18,6 @@ public class CourseController(CourseRepository courseRepository, CourseService c
     private readonly CourseService _courseService = courserService;
 
 
-
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> Create(CourseModel model)
@@ -56,13 +55,23 @@ public class CourseController(CourseRepository courseRepository, CourseService c
 
     [HttpGet]
 
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 10)
     {
-        var courses = await _courseService.GetAllAsync();
+
+        var courses = await _courseService.GetAllAsync(category, searchQuery);
+
+        CourseResult result = new CourseResult
+        {
+            Succeeded = true,
+            TotalItems = courses.Count()
+        };
+
+        result.TotaltPages = (int)Math.Ceiling(result.TotalItems / (double)pageSize);
+        result.Course = courses.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
         if (courses != null)
         {
-            return Ok(courses);
+            return Ok(result);
         }
         return NotFound();
     }
@@ -75,8 +84,25 @@ public class CourseController(CourseRepository courseRepository, CourseService c
 
         if (course != null)
         {
-            return Ok(course);
+
+            CourseModel model = new CourseModel
+            {
+                Id = course.Id,
+                Image = course.Image,
+                BestSeller = course.BestSeller,
+                Title = course.Title,
+                Author = course.Author,
+                Price = course.Price,
+                SalePrice = course.SalePrice,
+                OldPrice = course.OldPrice,
+                Hours = course.Hours,
+                Likes = course.Likes,
+            };
+
+            return Ok(model);
         }
+
+
         return NotFound();
     }
 
