@@ -22,10 +22,11 @@ public class CourseEntity
 
     public string? Likes { get; set; }
 
+    public bool Saved { get; set; } = false;
+
     public int? categoryId { get; set; }
 
     public CategoryEntity? Category { get; set; }
 
-    public ICollection<SavedCourseEntity>? SavedCourse { get; set; }
 
 }

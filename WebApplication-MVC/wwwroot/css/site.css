@@ -1506,22 +1506,44 @@ main #courses .container .articles .article:hover {
   cursor: pointer;
   background-color: #EFF2FC;
 }
-main #courses .container .articles .article a {
+main #courses .container .articles .article .saved {
   color: Grey;
   position: absolute;
+  background-color: #6366F1;
   border: none;
   border-radius: 25px;
-  padding: 0;
+  padding: 7px 13px;
   right: 8%;
   top: 4%;
 }
-main #courses .container .articles .article a .fa-tag {
+main #courses .container .articles .article .saved:hover {
   background-color: white;
-  padding: 10px;
+}
+main #courses .container .articles .article .saved:hover .fa-bookmark {
+  color: grey;
+}
+main #courses .container .articles .article .saved .fa-bookmark {
+  color: white;
   border-radius: 25px;
 }
-main #courses .container .articles .article a .fa-tag:hover {
-  color: #6366F1;
+main #courses .container .articles .article .not-saved {
+  position: absolute;
+  background-color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 7px 13px;
+  right: 8%;
+  top: 4%;
+}
+main #courses .container .articles .article .not-saved:hover {
+  background-color: #6366F1;
+}
+main #courses .container .articles .article .not-saved:hover .fa-bookmark {
+  color: white;
+}
+main #courses .container .articles .article .not-saved .fa-bookmark {
+  color: Grey;
+  border-radius: 25px;
 }
 main #courses .container .articles .article .best-seller {
   position: absolute;
@@ -2564,11 +2586,15 @@ main #get-started .container .section-title a {
 #saved-courses .container .profile .buttons .active {
   background-color: #6366F1;
 }
+#saved-courses .container .courses {
+  max-width: 648px;
+  width: 100%;
+}
 #saved-courses .container .courses .title-button {
   display: flex;
   justify-content: space-between;
 }
-#saved-courses .container .courses .title-button button {
+#saved-courses .container .courses .title-button form button {
   background-color: white;
   color: red;
   padding: 8px 30px;
@@ -2587,27 +2613,54 @@ main #get-started .container .section-title a {
 #saved-courses .container .courses .articles .article {
   position: relative;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  display: block;
   border-radius: 15px;
   color: #9397AD;
   text-decoration: none;
+  transition: background-color 0.25s ease-in-out;
 }
 #saved-courses .container .courses .articles .article:hover {
   cursor: pointer;
   background-color: #EFF2FC;
 }
-#saved-courses .container .courses .articles .article a {
+#saved-courses .container .courses .articles .article .saved {
   color: Grey;
-}
-#saved-courses .container .courses .articles .article a .fa-tag {
   position: absolute;
+  background-color: #6366F1;
+  border: none;
+  border-radius: 25px;
+  padding: 7px 13px;
   right: 8%;
   top: 4%;
+}
+#saved-courses .container .courses .articles .article .saved:hover {
   background-color: white;
-  padding: 10px;
+}
+#saved-courses .container .courses .articles .article .saved:hover .fa-bookmark {
+  color: grey;
+}
+#saved-courses .container .courses .articles .article .saved .fa-bookmark {
+  color: white;
   border-radius: 25px;
 }
-#saved-courses .container .courses .articles .article a .fa-tag:hover {
-  color: #6366F1;
+#saved-courses .container .courses .articles .article .not-saved {
+  position: absolute;
+  background-color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 7px 13px;
+  right: 8%;
+  top: 4%;
+}
+#saved-courses .container .courses .articles .article .not-saved:hover {
+  background-color: #6366F1;
+}
+#saved-courses .container .courses .articles .article .not-saved:hover .fa-bookmark {
+  color: white;
+}
+#saved-courses .container .courses .articles .article .not-saved .fa-bookmark {
+  color: Grey;
+  border-radius: 25px;
 }
 #saved-courses .container .courses .articles .article .best-seller {
   position: absolute;
@@ -2620,7 +2673,7 @@ main #get-started .container .section-title a {
   font-size: 14px !important;
   color: white;
   background-color: #22C55E;
-  padding: 2px 5px;
+  padding: 0px 5px;
 }
 #saved-courses .container .courses .articles .article img {
   width: 100%;

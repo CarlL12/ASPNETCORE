@@ -33,6 +33,7 @@ main {
                     align-self: center;
                     color: #9397AD;
 
+
                     &:active {
                         color: $theme;
                     }
@@ -167,24 +168,51 @@ main {
                         background-color: #EFF2FC;
                     }
 
-                    a {
+                    .saved {
                         color: Grey;
                         position: absolute;
+                        background-color: $theme;
                         border: none;
                         border-radius: 25px;
-                        padding: 0;
+                        padding: 7px 13px;
                         right: 8%;
                         top: 4%;
 
-                        .fa-tag {
+                        &:hover {
                             background-color: white;
-                            padding: 10px;
-                            border-radius: 25px;
-                            ;
 
-                            &:hover {
-                                color: $theme;
+                            .fa-bookmark {
+                                color: grey;
                             }
+                        }
+
+                        .fa-bookmark {
+                            color: white;
+                            border-radius: 25px;
+                        }
+                    }
+
+                    .not-saved {
+                        position: absolute;
+                        background-color: white;
+                        border: none;
+                        border-radius: 25px;
+                        padding: 7px 13px;
+                        right: 8%;
+                        top: 4%;
+
+
+                        &:hover {
+                            background-color: $theme;
+
+                            .fa-bookmark {
+                                color: white;
+                            }
+                        }
+
+                        .fa-bookmark {
+                            color: Grey;
+                            border-radius: 25px;
                         }
                     }
 
@@ -273,12 +301,10 @@ main {
                 margin-top: 50px;
 
                 span {
-
-                    margin-right : 5px;
+                    margin-right: 5px;
                 }
 
                 .active {
-
                     background-color: grey;
                 }
             }

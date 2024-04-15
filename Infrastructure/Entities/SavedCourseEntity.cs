@@ -4,11 +4,8 @@ namespace Infrastructure.Entities;
 
 public class SavedCourseEntity
 {
-    public string UserId { get; set; } = null!;
+    public int Id { get; set; } 
 
-    public int CourseId { get; set; } 
+    public int Course { get; set; } 
 
-    public UserEntity User { get; set; } = null!;
-
-    public CourseEntity Course { get; set; } = null!;
 }

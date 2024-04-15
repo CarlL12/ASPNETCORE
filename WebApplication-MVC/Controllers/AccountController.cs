@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using WebApplication_MVC.Models.Views;
+using static System.Net.WebRequestMethods;
 
 namespace WebApplication_MVC.Controllers
 {
@@ -127,6 +129,44 @@ namespace WebApplication_MVC.Controllers
             return View(viewModel);
         }
 
+        [HttpGet] 
+
+        public async Task<IActionResult> SaveCourse (int id, string returnUrl)
+        {
+
+
+            if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var url = $"https://localhost:7294/api/SaveCourse/?id={id}&key={_configuration["ApiKey"]}";
+
+                var request = new HttpRequestMessage(HttpMethod.Post, url);
+
+                var response = await httpClient.SendAsync(request);
+                string message = "";
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+
+                        message = "Created";
+                        return Json(message);
+                    }
+                    else if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        message = "Removed";
+                        return Json(message);
+                    }
+                }
+
+            }
+
+            return View(returnUrl);
+
+        }
+
         [HttpGet]
         [Route("/account/security")]
         public async Task<ActionResult> Security()
@@ -174,6 +214,12 @@ namespace WebApplication_MVC.Controllers
 
             }
 
+
+            if (model.BasicInfo == null)
+                model.BasicInfo = await PopulateBasicInfoAsync();
+
+            model.Profile = await PopulateProfileInfoasync();
+
             if (model.Delete != null)
             {
                 if (model.Delete.Delete == true)
@@ -201,23 +247,71 @@ namespace WebApplication_MVC.Controllers
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> SavedCourses()
         {
+
             ViewData["Title"] = "Saved courses";
 
-            var viewModel = new SavedCoursesViewModel();
+            if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var viewModel = new SavedCoursesViewModel();
+                var responseCourses = await _httpClient.GetAsync($"https://localhost:7294/api/SaveCourse?key={_configuration["ApiKey"]}");
 
-            if (viewModel.BasicInfo == null)
-                viewModel.BasicInfo = await PopulateBasicInfoAsync();
+                var jsonCourses = await responseCourses.Content.ReadAsStringAsync();
+                var dataCourses = JsonConvert.DeserializeObject<List<CourseModel>>(jsonCourses);
 
-            viewModel.Profile = await PopulateProfileInfoasync();
+                if(dataCourses != null)
+                {
+                    viewModel.Courses = dataCourses;
+                }
+               
 
-            return View(viewModel);
+                if (viewModel.BasicInfo == null)
+                    viewModel.BasicInfo = await PopulateBasicInfoAsync();
+
+                viewModel.Profile = await PopulateProfileInfoasync();
+
+                return View(viewModel);
+            }
+
+            return View();
+
+
         }
 
+        [HttpPost]
+
+        public async Task<IActionResult> SavedCourses(SavedCoursesViewModel model)
+        {
+
+
+            if (model.BasicInfo == null)
+                model.BasicInfo = await PopulateBasicInfoAsync();
+
+                 model.Profile = await PopulateProfileInfoasync();
+
+            if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var responseCourses = await _httpClient.DeleteAsync($"https://localhost:7294/api/SaveCourse?key={_configuration["ApiKey"]}");
+
+                if (responseCourses.IsSuccessStatusCode)
+                {
+                    return View(model);
+                }
+            }
+            
+
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Courses(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 6)
         {
             ViewData["Title"] = "Courses";
+
 
             if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
             {
@@ -245,6 +339,7 @@ namespace WebApplication_MVC.Controllers
                 var jsonCategory = await responseCategory.Content.ReadAsStringAsync();
                 var dataCategory = JsonConvert.DeserializeObject<IEnumerable<CategoryModel>>(jsonCategory);
                 viewModel.Categories = dataCategory;
+
 
 
                 return View(viewModel);

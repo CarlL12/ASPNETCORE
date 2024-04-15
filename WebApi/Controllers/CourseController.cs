@@ -97,6 +97,7 @@ public class CourseController(CourseRepository courseRepository, CourseService c
                 OldPrice = course.OldPrice,
                 Hours = course.Hours,
                 Likes = course.Likes,
+                Saved = course.Saved
             };
 
             return Ok(model);

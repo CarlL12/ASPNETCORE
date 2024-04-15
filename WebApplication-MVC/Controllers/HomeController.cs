@@ -2,11 +2,7 @@
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
-using System.Text;
-using WebApplication_MVC.Models.Views;
+
 
 namespace WebApplication_MVC.Controllers
 {
@@ -97,6 +93,11 @@ namespace WebApplication_MVC.Controllers
                     return View(model);
                 }
             }
+            return View();
+        }
+
+        public IActionResult Error()
+        {
             return View();
         }
 

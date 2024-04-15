@@ -129,6 +129,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("SalePrice")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Saved")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,6 +143,22 @@ namespace Infrastructure.Migrations
                     b.HasIndex("categoryId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Infrastructure.Entities.SavedCourseEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Course")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SavedCourses");
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.SubscriberEntity", b =>

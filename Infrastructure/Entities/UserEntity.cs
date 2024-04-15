@@ -28,6 +28,5 @@ public class UserEntity : IdentityUser
 
     public AddressEntity? Address { get; set; }
 
-    public ICollection<SavedCourseEntity>? SavedCourse { get; set; }
 
 }

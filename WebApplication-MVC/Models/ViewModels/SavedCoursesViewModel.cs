@@ -8,7 +8,6 @@ public class SavedCoursesViewModel
 
     public BasicInfoModel BasicInfo { get; set; } = null!;
 
-    public CourseModel Course { get; set; } = null!;
+    public List<CourseModel> Courses { get; set; } = null!;
 
-    public DeleteModel Delete { get; set; } = null!;
 }

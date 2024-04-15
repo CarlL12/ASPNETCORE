@@ -1,7 +1,9 @@
-﻿@using Infrastructure.Models
+﻿@using Azure.Core
+@using Infrastructure.Models
 @using WebApplication_MVC.Models.Views
 
 @model CoursesViewModel
+
 
 
 
@@ -42,12 +44,39 @@
 
         <div class="articles">
 
-            @foreach(var course in Model.Courses!)
+            @if (TempData["Status"]?.ToString() == "Created")
+            {
+                <span class="alert alert-success">
+                    You have been subscribed
+                </span>
+            }
+            else if (TempData["Status"]?.ToString() == "Removed")
+            {
+                <span class="alert alert-warning">
+                    You have been subscribed
+                </span>
+            }
+            else
             {
 
+            }
+
+            @foreach(var course in Model.Courses!)
+            {
                 <div onclick="location.href='@Url.Action("SingleCourse", "Account", new {id = @course.Id})'" class="article">
                     <div class="best-seller">@course.BestSeller</div>
-                    <a asp-action="Join" asp-controller="Account" asp-route-id="@course.Id"><i class="fa-solid fa-tag"></i></a>
+                    @if (course.Saved )
+                    {
+                        <a href="#" class="saved" onclick="saveCourse(@course.Id); event.stopPropagation();"><i class="fa-regular fa-bookmark"></i></a>
+                    }
+                    else
+                    {
+                        <a href="#" class="not-saved" onclick="saveCourse(@course.Id); event.stopPropagation();"><i class="fa-regular fa-bookmark"></i></a>
+
+                        
+                    }
+
+                   
                     <img src="@Url.Content(course.Image)" alt="">
                     <div class="article-content">
                         <h5>@course.Title</h5>
@@ -76,8 +105,6 @@
                     </div>
                 </div>
             }
-
-
         </div>
         @if (Model.Pageination != null && Model.Pageination.TotalPages > 1)
         {

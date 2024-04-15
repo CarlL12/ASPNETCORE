@@ -24,4 +24,6 @@ public class CourseModel
     public string? Likes { get; set; }
 
     public string? Category { get; set; }
+
+    public bool Saved { get; set; } = false;
 }
