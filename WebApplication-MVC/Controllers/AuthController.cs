@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Entities;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -137,6 +138,7 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
     public async Task<IActionResult> FacebookCallback()
     {
         var info = await _signInManager.GetExternalLoginInfoAsync();
+        var signInModel = new SignInModel();
 
         if (info != null)
         {
@@ -173,6 +175,26 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                signInModel.Email = user.Email;
+                signInModel.Password = "123";
+                signInModel.RememberMe = false;
+
+                var content = new StringContent(JsonConvert.SerializeObject(signInModel), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"https://localhost:7294/api/Auth?key={_configuration["ApiKey"]}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var token = await response.Content.ReadAsStringAsync();
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Expires = DateTime.Now.AddDays(1)
+                    };
+
+                    Response.Cookies.Append("AccessToken", token, cookieOptions);
+                }
 
                 if (HttpContext.User != null)
                 {
@@ -199,6 +221,7 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
     public async Task<IActionResult> GoogleCallback()
     {
         var info = await _signInManager.GetExternalLoginInfoAsync();
+        var signInModel = new SignInModel();
 
         if (info != null)
         {
@@ -235,6 +258,26 @@ public class AuthController(UserManager<UserEntity> userManager, SignInManager<U
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                signInModel.Email = user.Email;
+                signInModel.Password = "123";
+                signInModel.RememberMe = false;
+
+                var content = new StringContent(JsonConvert.SerializeObject(signInModel), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"https://localhost:7294/api/Auth?key={_configuration["ApiKey"]}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var token = await response.Content.ReadAsStringAsync();
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Expires = DateTime.Now.AddDays(1)
+                    };
+
+                    Response.Cookies.Append("AccessToken", token, cookieOptions);
+                }
 
                 if (HttpContext.User != null)
                 {

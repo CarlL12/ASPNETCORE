@@ -252,11 +252,17 @@ namespace WebApplication_MVC.Controllers
         {
 
             ViewData["Title"] = "Saved courses";
+            var viewModel = new SavedCoursesViewModel();
+
+            if (viewModel.BasicInfo == null)
+                viewModel.BasicInfo = await PopulateBasicInfoAsync();
+
+            viewModel.Profile = await PopulateProfileInfoasync();
 
             if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var viewModel = new SavedCoursesViewModel();
+                
                 var responseCourses = await _httpClient.GetAsync($"https://localhost:7294/api/SaveCourse?key={_configuration["ApiKey"]}");
 
                 var jsonCourses = await responseCourses.Content.ReadAsStringAsync();
@@ -268,15 +274,11 @@ namespace WebApplication_MVC.Controllers
                 }
                
 
-                if (viewModel.BasicInfo == null)
-                    viewModel.BasicInfo = await PopulateBasicInfoAsync();
-
-                viewModel.Profile = await PopulateProfileInfoasync();
 
                 return View(viewModel);
             }
 
-            return View();
+            return View(viewModel);
 
 
         }

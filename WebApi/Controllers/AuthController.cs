@@ -43,4 +43,7 @@ public class AuthController(IConfiguration configuration) : ControllerBase
         }
         return Unauthorized();
     }
+
+
+
 }
